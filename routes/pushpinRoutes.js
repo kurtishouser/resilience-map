@@ -13,6 +13,9 @@ var routes = function (Pushpin) {
         })
         .get(function (req, res) {
             var query = {};
+            if (req.query.genre) {
+                query.genre = req.query.genre;
+            }
             Pushpin.find(query, function (err, pushpins) {
                 if (err) {
                     res.status(500).send(err);
@@ -23,11 +26,13 @@ var routes = function (Pushpin) {
         });
 
     pushpinRouter.use('/:pushpinId', function (req, res, next) {
+        console.log("here"); 
         Pushpin.findById(req.params.pushpinId, function (err, pushpin) {
             if (err) {
                 res.status(500).send(err);
-            } else if (pushpin) {
+            } else if (pushpin) { 
                 req.pushpin = pushpin;
+                next(); 
             } else {
                 res.statusCode(404).send('no pushpin found');
             }
