@@ -1,6 +1,9 @@
 var express = require('express'); 
 var mongoose = require('mongoose'); 
 var bodyParser = require('body-parser'); 
+var logger = require('./logger');
+var path = require("path");
+
 require("dotenv").config();
 
 var db = mongoose.connect(process.env.MONGO_CONNECTION_STRING); 
@@ -10,15 +13,17 @@ var Pushpin = require('./models/pushpinModel');
 
 console.log(process.env.MONGO_CONNECTION_STRING); 
 
+app.use(logger);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));  
+app.use(express.static(path.join(__dirname, "public")));
 
 var pushpinRouter = require('./routes/pushpinRoutes')(Pushpin);
 
 app.use('/api/pushpins', pushpinRouter); 
 
-app.get('/', function(req, res){
-    res.send('Welcome to my api'); 
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/" + "index.html");
 });
 
 app.listen(process.env.PORT || 3000, function(){

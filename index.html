@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <script type='text/javascript' src='/BingMapsCredentials.js'></script>
+</head>
+
+<body>
+    <div id="myMap" style="width: 100vw; height: 100vh;"></div>
+
+    <div id="inputForm" style="display:none;">
+        <table>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td>Title</td>
+                <td><input id="titleTbx" type="text" /></td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td><input id="descriptionTbx" type="text" /></td>
+            </tr>
+            <tr>
+                <td>Author</td>
+                <td><input id="authorTbx" type="text"/></td>
+            </tr>
+            <tr>
+                <td>Asset</td>
+                <td>
+                    <select id='assetSelect'>
+                        <option value="supplies">Supplies</option>
+                        <option value="staff">Staff</option>
+                        <option value="food">Food</option>
+                        <option value="water">Water</option>
+                        <option value="energy or fuel">Energy/Fuel</option>
+                        <option value="medical">Medical</option>
+                        <option value="open space">Open Space</option>
+                        <option value="shelter">Shelter</option>
+                    </select>
+                </td>
+            </tr>
+            <td colspan="2"><input type="button" value="Save" onclick="saveData()" style="float:right;" /></td>
+            </tr>
+        </table>
+    </div>
+
+    <fieldset style="width:600px;margin-top:10px;">
+        <legend>Create Pushpin and Add Metadata Sample</legend>
+        This sample shows how a form can be displayed to enter metadata for a pushpin after it has been added to the map. To try
+        this out, click on the map to add a pushpin. Enter some metadata into the form that is displayed and press save.
+        Click on the pushpin to see the metadata that was saved for the pushpin.
+    </fieldset>
+
+    <script type='text/javascript' src='/index.js'></script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+</body>
+
+</html>
