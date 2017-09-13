@@ -26,7 +26,6 @@ var routes = function (Pushpin) {
         });
 
     pushpinRouter.use('/:pushpinId', function (req, res, next) {
-        console.log("here"); 
         Pushpin.findById(req.params.pushpinId, function (err, pushpin) {
             if (err) {
                 res.status(500).send(err);
