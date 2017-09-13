@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema; 
 
 var pushpinModel = new Schema({
-    lat: {type: Float32Array },
-    lon: {type: Float32Array}, 
     title: {type: String},
+    lat: {type: Number },
+    lon: {type: Number }, 
     description: {type: String}, 
     author: {type: String}, 
     asset: {type: String}

@@ -21,4 +21,8 @@ var routes = function(Pushpin){
             }
         })
     })
-}
+
+    return pushpinRouter
+}; 
+
+module.exports = routes; 
