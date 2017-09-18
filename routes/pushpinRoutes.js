@@ -7,7 +7,7 @@ var routes = function (Pushpin) {
     pushpinRouter.route('/')
         .post(function (req, res) {
             var pushpin = new Pushpin(req.body);
-
+            console.log(req.body); 
             pushpin.save();
             res.status(201).send(pushpin);
         })

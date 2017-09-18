@@ -55,6 +55,30 @@ function mapClicked(e) {
     document.getElementById('inputForm').style.display = '';
 }
 
+function saveDataAgain() {
+    currentPushpin.metadata = {
+        title: document.getElementById('titleTbx').value, 
+        description: document.getElementById('descriptionTbx').value, 
+        author: document.getElementById('authorTbx').value, 
+        asset: document.getElementById('assetSelect').value
+    }
+
+    console.log("Pushing this persons edit: " + currentPushpin.metadata.author); 
+
+    requestBody = {meta: currentPushpin.metadata, loc: currentPushpin.geometry}
+ 
+
+    $.post('api/pushpins', requestBody, function(data){
+        console.log( requestBody + " posted to api/pushpins")
+    }, 'json'); 
+
+    document.getElementById('titleTbx').value = '';
+    document.getElementById('descriptionTbx').value = '';
+    document.getElementById('authorTbx').value = ''; 
+    document.getElementById('assetSelect').value = ''; 
+    document.getElementById('inputForm').style.display = 'none';
+}
+
 function submitToAzure(metadata, location){
     var parameters = { meta : metadata, loc : location }; 
     $.post('/api/pushpins', parameters, function (data){

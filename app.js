@@ -6,7 +6,9 @@ var path = require("path");
 
 require("dotenv").config();
 
-var db = mongoose.connect(process.env.MONGO_CONNECTION_STRING); 
+// var db = mongoose.createConnection(process.env.MONGO_CONNECTION_STRING); 
+mongoose.connect(process.env.MONGO_CONNECTION_STRING, { useMongoClient:true, promiseLibrary: global.Promise }); 
+
 
 var app = express(); 
 var Pushpin = require('./models/pushpinModel'); 
