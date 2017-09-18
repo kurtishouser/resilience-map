@@ -1,15 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-// var pushpinModel = new Schema({
-//     title: {type: String},
-//     lat: {type: Number },
-//     lon: {type: Number }, 
-//     description: {type: String}, 
-//     author: {type: String}, 
-//     asset: {type: String}
-// });
-
 var pushpinModel = new Schema({
     loc: {
         bounds: [{
@@ -18,7 +9,7 @@ var pushpinModel = new Schema({
         x: { type: String },
         y: { type: String }
     },
-    meta: {
+    metadata: {
         asset: { type: String },
         author: { type: String },
         description: { type: String },

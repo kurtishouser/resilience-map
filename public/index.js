@@ -5,7 +5,7 @@ function GetMap() {
         credentials: BingMapsKey,
         // mapTypeId: Microsoft.Maps.MapTypeId.aerial, // This is running really slow... 
         center: new Microsoft.Maps.Location(37.78, -122.44),
-        zoom: 14      
+        zoom: 14
     });
     //Add a click event to the map.
     Microsoft.Maps.Events.addHandler(map, 'click', mapClicked);
@@ -14,30 +14,52 @@ function GetMap() {
     infobox = new Microsoft.Maps.Infobox(map.getCenter(), { visible: false });
     infobox.setMap(map);
 
-    $.get('/api/pushpins', function(data){
-        console.log(data); 
+    $.get('/api/pushpins', function (data) {
+        console.log(data);
     })
 
-    $.get('/api/pushpins', {number : 100, partitionKey: 'water'}, function(data){
-        // now we have the data let's push some pins. 
-        for (var i = 0; i < data.length; i++){
-            console.log(data[i]); 
-            var lat = parseFloat(data[i].lat._);  
-            var lon = parseFloat(data[i].lon._); 
-            var loc = new Microsoft.Maps.Location(lat, lon);
-            var pin = new Microsoft.Maps.Pushpin(loc); 
+    // $.get('/api/pushpins', { number: 100, partitionKey: 'water' }, function (data) {
+    //     // now we have the data let's push some pins. 
+    //     for (var i = 0; i < data.length; i++) {
+    //         console.log(data[i]);
+    //         var lat = parseFloat(data[i].lat._);
+    //         var lon = parseFloat(data[i].lon._);
+    //         var loc = new Microsoft.Maps.Location(lat, lon);
+    //         var pin = new Microsoft.Maps.Pushpin(loc);
 
-            pin.metadata = {
-                title : data[i].title._, 
-                description : "Asset: " + data[i].asset._ + " Description: " + data[i].description._ + " Author: " + data[i].author._     
+    //         pin.metadata = {
+    //             title: data[i].title._,
+    //             description: "Asset: " + data[i].asset._ + " Description: " + data[i].description._ + " Author: " + data[i].author._
+    //         }
+
+    //         // Add a click event handler to the pushpin. 
+    //         Microsoft.Maps.Events.addHandler(pin, 'click', pushpinClicked);
+
+    //         map.entities.push(pin);
+    //     }
+    //     console.log(data);
+    // })
+
+    $.get('/api/pushpins', function (data) {
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].loc != undefined && data[i].metadata != undefined) {
+                var d = data[i]; 
+                console.log(d);
+                var lat = parseFloat(d.loc.y);
+                var lon = parseFloat(d.loc.x);
+                var loc = new Microsoft.Maps.Location(lat, lon);
+                var pin = new Microsoft.Maps.Pushpin(loc);
+
+
+                pin.metadata = {
+                    title: d.metadata.title,
+                    description: "Asset: " + d.metadata.asset + " Description: " + d.metadata.description + " Author: " + d.metadata.author
+                }
+                Microsoft.Maps.Events.addHandler(pin, 'click', pushpinClicked);
+
+                map.entities.push(pin);
             }
-
-            // Add a click event handler to the pushpin. 
-            Microsoft.Maps.Events.addHandler(pin, 'click', pushpinClicked);
-            
-            map.entities.push(pin); 
         }
-        console.log(data); 
     })
 }
 
@@ -55,63 +77,27 @@ function mapClicked(e) {
     document.getElementById('inputForm').style.display = '';
 }
 
-function saveDataAgain() {
+function saveData() {
     currentPushpin.metadata = {
-        title: document.getElementById('titleTbx').value, 
-        description: document.getElementById('descriptionTbx').value, 
-        author: document.getElementById('authorTbx').value, 
+        title: document.getElementById('titleTbx').value,
+        description: document.getElementById('descriptionTbx').value,
+        author: document.getElementById('authorTbx').value,
         asset: document.getElementById('assetSelect').value
     }
 
-    console.log("Pushing this persons edit: " + currentPushpin.metadata.author); 
+    requestBody = { metadata: currentPushpin.metadata, loc: currentPushpin.geometry }
 
-    requestBody = {meta: currentPushpin.metadata, loc: currentPushpin.geometry}
- 
-
-    $.post('api/pushpins', requestBody, function(data){
-        console.log( requestBody + " posted to api/pushpins")
-    }, 'json'); 
+    $.post('api/pushpins', requestBody, function (data) {
+        console.log(requestBody + " posted to api/pushpins")
+    }, 'json');
 
     document.getElementById('titleTbx').value = '';
     document.getElementById('descriptionTbx').value = '';
-    document.getElementById('authorTbx').value = ''; 
-    document.getElementById('assetSelect').value = ''; 
+    document.getElementById('authorTbx').value = '';
+    document.getElementById('assetSelect').value = '';
     document.getElementById('inputForm').style.display = 'none';
 }
 
-function submitToAzure(metadata, location){
-    var parameters = { meta : metadata, loc : location }; 
-    $.post('/api/pushpins', parameters, function (data){
-        alert(data);}, 'json'
-    )
-}
-
-function saveData() {
-    //Get the data from form and add it to the pushpin
-    currentPushpin.metadata = {
-        title: document.getElementById('titleTbx').value,
-        description: '{ "description" : "' + document.getElementById('descriptionTbx').value + '", "author" : "' + document.getElementById('authorTbx').value + '", "asset" :"' + document.getElementById('assetSelect').value + '"}'   
-    };
-    // Update with Author asset 
-    /*
-    {
-        "description": "document.getElementById{'descritpionTbx').value",
-        "author": "document.getElementById('authorTbx').value",
-        "asset" : "docuemnt.getElementById('assetSelect').value"
-    }
-
-    */
-    console.log("currentPushpingmetatdata: " + currentPushpin.metadata.title);
-
-    //Optionally save this data somewhere (like a database or local storage).
-    submitToAzure(currentPushpin.metadata, currentPushpin.geometry); 
-
-    //Clear the fields in the form and then hide the form.
-    document.getElementById('titleTbx').value = '';
-    document.getElementById('descriptionTbx').value = '';
-    document.getElementById('assetSelect').value = ''; 
-    document.getElementById('inputForm').style.display = 'none';
-}
 
 function pushpinClicked(e) {
     //Make sure the infobox has metadata to display.
