@@ -13,7 +13,7 @@ Here's instructions for how to do this on [Azure's Cosmos DB](https://docs.micro
 
 Take that connection string in put it in a .env file next to app.js:  
 <kbd>
-    <img src="https://imgur.com/a/NkDGx" width="800">
+<img src="https://imgur.com/a/NkDGx" width="800">
 </kbd> 
 
 `$ npm install`
