@@ -23,6 +23,7 @@ You'll also need a `BingMapsCredentials.js` in your public directory. Like dis:
 <kbd>
 <img src="https://i.imgur.com/1XDMDF0.png" width="800"> 
 </kbd>
+- Here's a snippet: 
 
 ``` JavaScript 
 //Update this value with your Bing Maps key.
