@@ -15,7 +15,7 @@ var routes = function (Pushpin){
                 res.status(500).send(err);
             } else {
                 // res.json(pushpins);
-                res.json(GeoJSON.parse(pushpins, {Point: ['x','y']}));
+                res.json(GeoJSON.parse(pushpins, {Point: ['loc.y', 'loc.x']})); 
             }
         })
     });
