@@ -12,7 +12,7 @@ You'll now need a MongoDB to store the map data.
 Here's instructions for how to do this on [Azure's Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/mongodb-introduction)
 
 Take that connection string in put it in a .env file next to app.js:  
-![EnvExample](https://imgur.com/a/NkDGx)
+<kbd><img src="https://imgur.com/a/NkDGx" width="800"></kbd> 
 
 `$ npm install`
 `$ npm start` or `nodemon app.js` or `node app.js`
