@@ -13,10 +13,22 @@ This is starter code, please fork and go to town!
 <img src="https://i.imgur.com/WWSxgKR.png" width="800">
 </kbd> 
 - Here's a snippet you can copy: 
+
 ```
 PORT=8080
 MONGO_CONNECTION_STRING=mongodb://sfmta-storage:asdfasdfasdfZ3ZBhhm6sFKaUzaBI8up4XTxV5BJh8sTVt6Mm45cDDqmUzbyr1p2aDzykBuaO97BAg==@sfmta-storage.documents.azure.com:10255/?ssl=true&replicaSet=globaldb
 ```
+
+You'll also need a `BingMapsCredentials.js` in your public directory. Like dis:
+<kbd>
+<img src="https://i.imgur.com/1XDMDF0.png" width="800"> 
+</kbd>
+
+``` JavaScript 
+//Update this value with your Bing Maps key.
+var BingMapsKey = 'AasdfasdfasdfasdfwNFdz2blihxwv8mPZdB5vEJR7epV3tluq67AFF75nFgVGzMH';
+```
+
 - Now you can run these to start the app and visit localhost:3000 or localhost:8080 depending on your *.env* 
 - `$ npm install`
 - `$ npm start` or `nodemon app.js` or `node app.js`
