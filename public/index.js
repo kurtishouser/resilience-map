@@ -8,7 +8,6 @@ function GetMap() {
         zoom: 14
     });
     //Add a click event to the map.
-    Microsoft.Maps.Events.addHandler(map, 'click', mapClicked);
 
     //Create an infobox, but hide it. We can reuse it for each pushpin.
     infobox = new Microsoft.Maps.Infobox(map.getCenter(), { visible: false });
@@ -17,28 +16,6 @@ function GetMap() {
     $.get('/api/pushpins', function (data) {
         console.log(data);
     })
-
-    // $.get('/api/pushpins', { number: 100, partitionKey: 'water' }, function (data) {
-    //     // now we have the data let's push some pins. 
-    //     for (var i = 0; i < data.length; i++) {
-    //         console.log(data[i]);
-    //         var lat = parseFloat(data[i].lat._);
-    //         var lon = parseFloat(data[i].lon._);
-    //         var loc = new Microsoft.Maps.Location(lat, lon);
-    //         var pin = new Microsoft.Maps.Pushpin(loc);
-
-    //         pin.metadata = {
-    //             title: data[i].title._,
-    //             description: "Asset: " + data[i].asset._ + " Description: " + data[i].description._ + " Author: " + data[i].author._
-    //         }
-
-    //         // Add a click event handler to the pushpin. 
-    //         Microsoft.Maps.Events.addHandler(pin, 'click', pushpinClicked);
-
-    //         map.entities.push(pin);
-    //     }
-    //     console.log(data);
-    // })
 
     $.get('/api/pushpins', function (data) {
         for (var i = 0; i < data.length; i++) {
@@ -61,6 +38,19 @@ function GetMap() {
             }
         }
     })
+
+    Microsoft.Maps.Events.addHandler(map, 'click', mapClicked);
+    Microsoft.Maps.Events.addHandler(infobox, 'infoboxChanged', function () { highlight('infoboxChanged'); });
+    Microsoft.Maps.Events.addHandler(infobox, 'mouseenter', function () { highlight('mouseenter'); });
+    Microsoft.Maps.Events.addHandler(infobox, 'mouseleave', function () { highlight('mouseleave'); });
+
+}
+
+function highlight(id) {
+    //Highlight the mouse event div to indicate that the event has fired.
+    document.getElementById(id).style.background = 'LightGreen';
+    //Remove the highlighting after a second.
+    setTimeout(function () { document.getElementById(id).style.background = 'white'; }, 1000);
 }
 
 function mapClicked(e) {
@@ -75,6 +65,10 @@ function mapClicked(e) {
 
     //Open up an input form here the user can enter in details for pushpin. 
     document.getElementById('inputForm').style.display = '';
+}
+
+function deleteEntry(){
+    console.log("You clicked Delete"); 
 }
 
 function saveData() {
