@@ -57,4 +57,4 @@ typings/
 # dotenv environment variables file
 .env
 
-# BingMapsCredentials.js 
+BingMapsCredentials.js 
