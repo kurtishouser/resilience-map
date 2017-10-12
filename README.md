@@ -1,5 +1,7 @@
 ## Resilency Map Project for National Day of Civic Hacking
 
+Visit the site here: [http://resilience.azurewebsites.net]
+
 Web app for collecting location data using Bing Maps! 
 This is starter code, please fork and go to town! 
 
